@@ -14,13 +14,21 @@ io.on("connection",(socket)=>{
     console.log("A new user connected");
 
     socket.emit("newMsg",{
-        from:"server",
-        text:"This is order."
+        from:"Admin",
+        text:"Welcome to the chat app!",
+        createdAt: new Date().getTime(),
     })
+
+    socket.broadcast.emit("newMsg",{
+        from:"Admin",
+        text:"new user join chat app",
+        createdAt: new Date().getTime(),
+    })
+
     socket.on("createNewMsg",(msg)=>{
         console.log("createNewMsg",msg);
 
-        io.emit("newMessage",{
+        io.emit("newMsg",{
             from:msg.from,
             text:msg.text,
             createdAt: new Date().getTime()
